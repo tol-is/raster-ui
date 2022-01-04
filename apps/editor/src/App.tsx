@@ -60,7 +60,7 @@ export const App = () => {
   const { font, space, gravity, tension, length, base, interval, step } = useTweaks(
     {
       ...makeFolder(
-        "Type Scale",
+        "Type",
         {
           // ...makeButton("Font", () => (inputRef.current ? inputRef.current.click() : null)),
 
