@@ -60,7 +60,7 @@ export const App = () => {
   const { font, space, gravity, tension, length, base, interval, step } = useTweaks(
     {
       ...makeFolder(
-        "Type",
+        "Typescale",
         {
           // ...makeButton("Font", () => (inputRef.current ? inputRef.current.click() : null)),
 
@@ -86,7 +86,7 @@ export const App = () => {
           interval: { min: 1, max: 4, value: 2, step: 1 },
           step: { min: 1, max: 4, value: 2, step: 1 },
         },
-        true,
+        false,
       ),
       ...makeSeparator(),
       ...makeFolder(
