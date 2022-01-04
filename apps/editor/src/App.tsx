@@ -114,7 +114,7 @@ export const App = () => {
     { container: tweaksRef },
   )
 
-  const int = (v) => interpolate(v, 16, 72, 1.6 + tension * 0.25, 1 + (tension === 1 ? 0.05 : 0), 1)
+  const int = (v) => interpolate(v, 16, 72, 1.6 + tension * 0.25, 1 + tension * 0.05, 1)
 
   useEffect(() => {
     fromUrl(font).then((otf) => {
