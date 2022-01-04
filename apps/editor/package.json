@@ -5,7 +5,7 @@
   "scripts": {
     "copy-assets": "cp -r ./static/* dist",
     "dev": "yarn copy-assets && parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "build": "yarn copy-assets && parcel build src/index.html"
   },
   "staticFiles": {
     "staticPath": "apps/editor/static"
