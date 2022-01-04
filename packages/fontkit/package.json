@@ -1,0 +1,19 @@
+{
+  "name": "@raster-ui/fontkit",
+  "version": "0.0.0",
+  "main": "./index.tsx",
+  "types": "./index.tsx",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
+    "blob-to-buffer": "^1.2.9",
+    "cross-fetch": "3.1.4",
+    "node-fetch": "3.1.0",
+    "tsconfig": "*",
+    "typescript": "^4.5.3"
+  },
+  "dependencies": {
+    "fontkit-browserified": "^0.1.0"
+  }
+}

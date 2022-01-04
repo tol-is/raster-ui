@@ -1,0 +1,35 @@
+{
+  "name": "editor",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "copy-assets": "cp -r ./static/* dist",
+    "dev": "yarn copy-assets && parcel src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "staticFiles": {
+    "staticPath": "apps/editor/static"
+  },
+  "dependencies": {
+    "@emotion/css": "^11.7.1",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@raster-ui/elements": "*",
+    "@raster-ui/fontkit": "*",
+    "@raster-ui/reset": "*",
+    "@raster-ui/scales": "*",
+    "lorem-ipsum": "^2.0.4",
+    "next": "12.0.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "tweakpane": "1.5.6",
+    "use-tweaks": "0.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.8.4",
+    "parcel": "^2.0.1",
+    "parcel-reporter-static-files-copy": "1.3.4",
+    "typescript": "^4.1.3"
+  }
+}
