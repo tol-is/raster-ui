@@ -22,7 +22,7 @@ export const TextDev = ({
   lineHeight = 1,
   tension = 0,
   gravity = true,
-
+  debug = false,
   className = "",
 }) => {
   const capHeightRatio = font.capHeight / font.unitsPerEm
@@ -44,7 +44,8 @@ export const TextDev = ({
       <div
         className={css`
           opacity: 0.6;
-
+          position: absolute;
+          margin-top: -18px;
           display: block;
           font-size: 11px;
           font-family: monospace;
@@ -58,6 +59,7 @@ export const TextDev = ({
         className={css`
           position: relative;
           display: block;
+          ${debug && `background-color: rgba(255, 0, 255, 0.4);`}
         `}>
         <Text font={font} fontSize={fontSize} baseline={baseline} lineGap={lineGap} snap={gravity}>
           {children}
