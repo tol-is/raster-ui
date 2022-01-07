@@ -100,7 +100,7 @@ export const App = () => {
           value: 0,
           min: -1,
           max: 1,
-          step: 0.2,
+          step: 0.5,
         },
         space: {
           value: 4,
@@ -113,7 +113,7 @@ export const App = () => {
     ),
   })
 
-  const start = (v) => 1 + parseFloat(interpolate(v, -1, 1, 0.2, 0.8, 0.5))
+  const start = (v) => 1 + parseFloat(interpolate(v, -1, 1, 0.8, 0.2, 0.5))
   const end = (v) => 1 + parseFloat(interpolate(v, -1, 1, -0.05, 0.05, 0.5))
   const lineHeight = (v) => interpolate(v, 16, 96, start(tension), end(tension), 1)
 
