@@ -40,7 +40,7 @@ export const interpolate = (value, s1, s2, t1, t2, slope) => {
 
   var result = C1.y * b1(percent) + C2.y * b2(percent) + C3.y * b3(percent)
 
-  return result.toFixed(2)
+  return parseFloat(result.toFixed(2))
 
   function b1(t) {
     return t * t
@@ -60,7 +60,7 @@ export const App = () => {
   const [debug, setDebug] = useState<boolean>(false)
   // const caps = (v) => interpolate(v, 14, 72, 1.3, 0.9, 0.99)
 
-  const [{ font }] = useControls(() => ({
+  const [{ font, caps }] = useControls(() => ({
     font: {
       value: "/fonts/Commissioner[FLAR,VOLM,slnt,wght].ttf",
       options: {
@@ -84,7 +84,7 @@ export const App = () => {
     Typescale: folder(
       {
         length: { min: 1, max: 24, value: 14, step: 1 },
-        base: { min: 14, max: 24, value: 16, step: 1 },
+        base: { min: 14, max: 256, value: 16, step: 1 },
         interval: { min: 1, max: 4, value: 2, step: 1 },
         step: { min: 1, max: 4, value: 2, step: 1 },
       },
@@ -93,20 +93,20 @@ export const App = () => {
   })
 
   const { gravity, gravityTension, tension } = useControls({
-    Environment: folder(
+    Rhythm: folder(
       {
         gravity: false,
         gravityTension: {
           label: "tension",
           value: 0,
-          render: (get) => get("Environment.gravity"),
+          render: (get) => get("Rhythm.gravity"),
           min: -1,
           max: 1,
           step: 1,
         },
         tension: {
           value: 0,
-          render: (get) => !get("Environment.gravity"),
+          render: (get) => !get("Rhythm.gravity"),
           min: -1,
           max: 1,
           step: 0.2,
@@ -117,10 +117,13 @@ export const App = () => {
   })
 
   const baseline = 4
-  const start = (v) => 1 + parseFloat(interpolate(v, -1, 1, 0.8, 0.2, 0.5))
-  const end = (v) => 1 + parseFloat(interpolate(v, -1, 1, -0.05, 0.05, 0.5))
-  const usedTension = gravity ? gravityTension : tension
-  const lineHeight = (v) => interpolate(v, 16, 96, start(usedTension), end(usedTension), 1)
+  const appledTension = gravity ? gravityTension * 0.8 : tension * 0.8
+  const normalizedTensions = Math.abs((appledTension - 1) / 2)
+
+  const start = 1.23 + normalizedTensions * 0.635
+  const end = 0.9 + normalizedTensions * 0.3
+
+  const lineHeight = (v) => interpolate(v, 16, 96, start, end, 0.6)
 
   useEffect(() => {
     fromUrl(font).then((otf) => {
@@ -185,7 +188,7 @@ export const App = () => {
       {otf && (
         <div
           className={css`
-            padding: ${baseline * 10}px 2vw;
+            padding: ${baseline * 20}px 2vw;
             display: grid;
             grid-template-columns: 128px 1fr;
             background-color: #080808;
@@ -203,21 +206,41 @@ export const App = () => {
           `}>
           <div
             className={css`
-              position: relative;
-
               text-align: center;
             `}>
-            {Array.from(new Array(length)).map((_, i) => (
-              <Text
-                fontSize={scale(i)}
-                font={otf}
-                className={css`
-                  margin-bottom: ${baseline * 6}px;
-                  font-variation-settings: "wght" 400;
-                `}>
-                a
-              </Text>
-            ))}
+            <div
+              className={css`
+                position: sticky;
+                top: 0;
+              `}>
+              {Array.from(new Array(length)).map((_, i) => (
+                // <TextDev
+                //   fontSize={scale(i)}
+                //   baseline={baseline}
+                //   lineHeight={lineHeight(scale(i))}
+                //   font={otf}
+                //   gravity={gravity}
+                //   debug={debug}
+                //   className={css`
+                //     margin-bottom: ${baseline * 5}px;
+                //     font-variation-settings: "wght" 400;
+                //     text-transform: ${caps ? "uppercase" : "none"};
+                //   `}>
+                //   a
+                // </TextDev>
+                <a href={`#${i}`}>
+                  <Text
+                    fontSize={scale(i)}
+                    font={otf}
+                    className={css`
+                      margin-bottom: ${baseline * 6}px;
+                      font-variation-settings: "wght" 400;
+                    `}>
+                    a
+                  </Text>
+                </a>
+              ))}
+            </div>
           </div>
           <div>
             <div
@@ -233,6 +256,7 @@ export const App = () => {
               `}>
               {Array.from(new Array(length)).map((_, i) => (
                 <TextDev
+                  id={`${i}`}
                   fontSize={scale(i)}
                   baseline={baseline}
                   lineHeight={lineHeight(scale(i))}
@@ -242,6 +266,7 @@ export const App = () => {
                   className={css`
                     margin-bottom: ${baseline * 7}px;
                     font-variation-settings: "wght" 400;
+                    text-transform: ${caps ? "uppercase" : "none"};
                   `}>
                   {text[i]}
                 </TextDev>

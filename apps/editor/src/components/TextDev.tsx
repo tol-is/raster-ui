@@ -13,7 +13,7 @@ const toBaseline = (baseline) => (num) => {
   return Math.round(num / baseline) * baseline
 }
 
-export const TextDev = ({ children, font, fontSize, baseline = 4, lineHeight = 1, gravity = true, debug = false, className = "" }) => {
+export const TextDev = ({ id, children, font, fontSize, baseline = 4, lineHeight = 1, gravity = true, debug = false, className = "" }) => {
   const capHeightRatio = font.capHeight / font.unitsPerEm
   const capHeight = fontSize * capHeightRatio
 
@@ -24,24 +24,23 @@ export const TextDev = ({ children, font, fontSize, baseline = 4, lineHeight = 1
 
   return (
     <div
+      id={id}
       className={css`
         position: relative;
         display: block;
+        padding-top: 24px;
         ${className}
       `}>
       <div
         className={css`
           opacity: 0.6;
           position: absolute;
-          margin-top: -18px;
+          margin-top: -24px;
           display: block;
           font-size: 11px;
           font-family: monospace;
-          margin-bottom: 12px;
         `}>
-        <div>
-          {fontSize}/{lineHeightValue}
-        </div>
+        <div>{fontSize}</div>
       </div>
       <div
         className={css`
