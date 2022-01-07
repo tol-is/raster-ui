@@ -40,7 +40,9 @@ export const TextDev = ({ id, children, font, fontSize, baseline = 4, lineHeight
           font-size: 11px;
           font-family: monospace;
         `}>
-        <div>{fontSize}</div>
+        <div>
+          {fontSize}/{lineHeightValue}
+        </div>
       </div>
       <div
         className={css`

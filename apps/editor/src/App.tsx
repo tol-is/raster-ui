@@ -121,9 +121,9 @@ export const App = () => {
   const normalizedTensions = Math.abs((appledTension - 1) / 2)
 
   const start = 1.23 + normalizedTensions * 0.635
-  const end = 0.9 + normalizedTensions * 0.3
+  const end = 0.9 + normalizedTensions * 0.2
 
-  const lineHeight = (v) => interpolate(v, 16, 96, start, end, 0.6)
+  const lineHeight = (v) => interpolate(v, 16, 96, start, end, 1)
 
   useEffect(() => {
     fromUrl(font).then((otf) => {
