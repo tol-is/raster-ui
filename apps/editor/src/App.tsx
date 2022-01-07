@@ -109,7 +109,7 @@ export const App = () => {
           render: (get) => !get("Environment.gravity"),
           min: -1,
           max: 1,
-          step: 0.5,
+          step: 0.2,
         },
       },
       { collapsed: false },
