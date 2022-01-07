@@ -92,18 +92,28 @@ export const App = () => {
     ),
   })
 
-  const { gravity, tension, space } = useControls({
+  const { gravity, gravityTension, tension, space } = useControls({
     Environment: folder(
       {
         gravity: false,
+        gravityTension: {
+          label: "tension",
+          value: 0,
+          render: (get) => get("Environment.gravity"),
+          min: -1,
+          max: 1,
+          step: 1,
+        },
         tension: {
           value: 0,
+          render: (get) => !get("Environment.gravity"),
           min: -1,
           max: 1,
           step: 0.5,
         },
         space: {
           value: 4,
+          render: (get) => get("Environment.gravity"),
           min: 2,
           max: 8,
           step: 1,
@@ -115,7 +125,9 @@ export const App = () => {
 
   const start = (v) => 1 + parseFloat(interpolate(v, -1, 1, 0.8, 0.2, 0.5))
   const end = (v) => 1 + parseFloat(interpolate(v, -1, 1, -0.05, 0.05, 0.5))
-  const lineHeight = (v) => interpolate(v, 16, 96, start(tension), end(tension), 1)
+  const usedTension = gravity ? gravityTension : tension
+
+  const lineHeight = (v) => interpolate(v, 16, 96, start(usedTension), end(usedTension), 1)
 
   useEffect(() => {
     fromUrl(font).then((otf) => {
