@@ -95,14 +95,12 @@ export const App = () => {
   const { gravity, tension, space } = useControls({
     Environment: folder(
       {
-        gravity: true,
+        gravity: false,
         tension: {
           value: 0,
-          options: {
-            high: -1,
-            default: 0,
-            low: 1,
-          },
+          min: -1,
+          max: 1,
+          step: 0.2,
         },
         space: {
           value: 4,
@@ -115,8 +113,9 @@ export const App = () => {
     ),
   })
 
-  const int = (v) => interpolate(v, 16, 96, 1.6 + tension * 0.25, 1 + tension * 0.05, 1)
-  // const int = (v) => interpolate(v, 16, 72, from, to, slope)
+  const start = (v) => 1 + parseFloat(interpolate(v, -1, 1, 0.2, 0.8, 0.5))
+  const end = (v) => 1 + parseFloat(interpolate(v, -1, 1, -0.05, 0.05, 0.5))
+  const lineHeight = (v) => interpolate(v, 16, 96, start(tension), end(tension), 1)
 
   useEffect(() => {
     fromUrl(font).then((otf) => {
@@ -231,7 +230,7 @@ export const App = () => {
                 <TextDev
                   fontSize={scale(i)}
                   baseline={space}
-                  lineHeight={int(scale(i))}
+                  lineHeight={lineHeight(scale(i))}
                   tension={0}
                   font={otf}
                   gravity={gravity}

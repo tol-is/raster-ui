@@ -3,10 +3,9 @@ import { css } from "@emotion/css"
 
 import { Text } from "./Text"
 
-const getAutolineGap = ({ fontSize, lineHeight, rowHeight, baseline }) => {
+const getAutolineGap = ({ fontSize, lineHeight, rowHeight, baseline, gravity }) => {
   const lineHeightPx = fontSize * lineHeight
-  const lead = Math.round((lineHeightPx - rowHeight) / baseline)
-
+  const lead = gravity ? Math.round((lineHeightPx - rowHeight) / baseline) : (lineHeightPx - rowHeight) / baseline
   return lead
 }
 
@@ -14,24 +13,13 @@ const toBaseline = (baseline) => (num) => {
   return Math.round(num / baseline) * baseline
 }
 
-export const TextDev = ({
-  children,
-  font,
-  fontSize,
-  baseline = 4,
-  lineHeight = 1,
-  tension = 0,
-  gravity = true,
-  debug = false,
-  className = "",
-}) => {
+export const TextDev = ({ children, font, fontSize, baseline = 4, lineHeight = 1, gravity = true, debug = false, className = "" }) => {
   const capHeightRatio = font.capHeight / font.unitsPerEm
   const capHeight = fontSize * capHeightRatio
 
   const rowHeight = gravity ? toBaseline(baseline)(capHeight) : capHeight
 
-  const lineGap = tension + getAutolineGap({ fontSize, lineHeight, rowHeight, baseline })
-
+  const lineGap = getAutolineGap({ fontSize, lineHeight, rowHeight, baseline, gravity })
   const lineHeightValue = Math.round(rowHeight + lineGap * baseline)
 
   return (
@@ -52,7 +40,7 @@ export const TextDev = ({
           margin-bottom: 12px;
         `}>
         <div>
-          {fontSize}/{lineHeightValue}
+          {fontSize}/{lineHeightValue}/{lineHeight}
         </div>
       </div>
       <div
