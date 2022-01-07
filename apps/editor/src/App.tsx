@@ -88,11 +88,11 @@ export const App = () => {
         interval: { min: 1, max: 4, value: 2, step: 1 },
         step: { min: 1, max: 4, value: 2, step: 1 },
       },
-      { collapsed: false },
+      { collapsed: true },
     ),
   })
 
-  const { gravity, gravityTension, tension, space } = useControls({
+  const { gravity, gravityTension, tension } = useControls({
     Environment: folder(
       {
         gravity: false,
@@ -111,22 +111,15 @@ export const App = () => {
           max: 1,
           step: 0.5,
         },
-        space: {
-          value: 4,
-          render: (get) => get("Environment.gravity"),
-          min: 2,
-          max: 8,
-          step: 1,
-        },
       },
       { collapsed: false },
     ),
   })
 
+  const baseline = 4
   const start = (v) => 1 + parseFloat(interpolate(v, -1, 1, 0.8, 0.2, 0.5))
   const end = (v) => 1 + parseFloat(interpolate(v, -1, 1, -0.05, 0.05, 0.5))
   const usedTension = gravity ? gravityTension : tension
-
   const lineHeight = (v) => interpolate(v, 16, 96, start(usedTension), end(usedTension), 1)
 
   useEffect(() => {
@@ -192,7 +185,7 @@ export const App = () => {
       {otf && (
         <div
           className={css`
-            padding: ${space * 10}px 2vw;
+            padding: ${baseline * 10}px 2vw;
             display: grid;
             grid-template-columns: 128px 1fr;
             background-color: #080808;
@@ -201,7 +194,7 @@ export const App = () => {
             ${debug &&
             `
             background-repeat: repeat;
-            background-size: 100% ${space}px;
+            background-size: 100% ${baseline}px;
             background-image: linear-gradient(
               rgba(107, 0, 107, 1) 1px,
               transparent 0
@@ -219,7 +212,7 @@ export const App = () => {
                 fontSize={scale(i)}
                 font={otf}
                 className={css`
-                  margin-bottom: ${space * 6}px;
+                  margin-bottom: ${baseline * 6}px;
                   font-variation-settings: "wght" 400;
                 `}>
                 a
@@ -232,7 +225,7 @@ export const App = () => {
               className={css`
                 padding-left: 32px;
                 display: grid;
-                row-gap: ${space * 10}px;
+                row-gap: ${baseline * 10}px;
                 align-items: start;
                 width: 100%;
 
@@ -241,14 +234,13 @@ export const App = () => {
               {Array.from(new Array(length)).map((_, i) => (
                 <TextDev
                   fontSize={scale(i)}
-                  baseline={space}
+                  baseline={baseline}
                   lineHeight={lineHeight(scale(i))}
-                  tension={0}
                   font={otf}
                   gravity={gravity}
                   debug={debug}
                   className={css`
-                    margin-bottom: ${space * 7}px;
+                    margin-bottom: ${baseline * 7}px;
                     font-variation-settings: "wght" 400;
                   `}>
                   {text[i]}
