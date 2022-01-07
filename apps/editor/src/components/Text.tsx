@@ -54,7 +54,8 @@ export const Text = ({ children, font, fontSize, baseline = 4, lineGap = 1, snap
         font-family: "${font.familyName}";
         font-weight: ${font.weightClass};
         font-size: ${fontSize}px;
-        line-height: ${lineHeightValue}px;
+        font-size: ${fontSize}px;
+        line-height: ${(lineHeightValue / fontSize).toFixed(3)};
         &::before {
           content: "";
           margin-bottom: ${trimTopValue}px;
