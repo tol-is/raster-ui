@@ -84,7 +84,7 @@ export const App = () => {
     Typescale: folder(
       {
         length: { min: 1, max: 24, value: 14, step: 1 },
-        base: { min: 14, max: 256, value: 16, step: 1 },
+        base: { min: 12, max: 32, value: 16, step: 1 },
         interval: { min: 1, max: 4, value: 2, step: 1 },
         step: { min: 1, max: 4, value: 2, step: 1 },
       },
@@ -123,7 +123,7 @@ export const App = () => {
   const start = 1.23 + normalizedTensions * 0.635
   const end = 0.9 + normalizedTensions * 0.2
 
-  const lineHeight = (v) => interpolate(v, 16, 96, start, end, 1)
+  const lineHeight = (v) => interpolate(v, 16, 86, start, end, 1)
 
   useEffect(() => {
     fromUrl(font).then((otf) => {
