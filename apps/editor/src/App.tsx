@@ -57,27 +57,39 @@ export const App = () => {
   const inputRef = useRef(null)
   const tweaksRef = useRef(null)
   const [otf, setOtf] = useState<TFontMetrics | null>(null)
-  const [debug, setDebug] = useState<boolean>(false)
+  // const [debug, setDebug] = useState<boolean>(false)
   // const caps = (v) => interpolate(v, 14, 72, 1.3, 0.9, 0.99)
 
-  const [{ font, caps }] = useControls(() => ({
-    font: {
-      value: "/fonts/Commissioner[FLAR,VOLM,slnt,wght].ttf",
-      options: {
-        Commissioner: "/fonts/Commissioner[FLAR,VOLM,slnt,wght].ttf",
-        Averta: "/fonts/AvertaPE-Regular.otf",
-        Inter: "/fonts/Inter.otf",
-        "IBM Plex Sans": "https://fonts.gstatic.com/s/ibmplexsans/v9/zYXgKVElMYYaJe8bpLHnCwDKhdHeFaxOedc.woff2",
-        "IBM Plex Serif": "https://fonts.gstatic.com/s/ibmplexserif/v10/jizDREVNn1dOx-zrZ2X3pZvkTiUf2zcZiVbJ.woff2",
-        "Playfair Display":
-          "https://fonts.gstatic.com/s/playfairdisplay/v25/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKd3vXDXbtXK-F2qC0s.woff",
-        Roboto: "https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2",
-        "Roboto Condensed": "https://fonts.gstatic.com/s/robotocondensed/v19/ieVl2ZhZI2eCN5jzbjEETS9weq8-19K7DQk6YvM.woff2",
-        "Fira Sans": "https://fonts.gstatic.com/s/firasans/v11/va9E4kDNxMZdWfMOD5Vvl4jLazX3dA.woff2",
-        "Fira Code": "https://fonts.gstatic.com/s/firacode/v14/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_A9sJVD7MOzlojwUKQ.woff",
-        "JetBrains Mono": "/fonts/JetBrainsMono-Regular.ttf",
+  const [{ debug, font, baseline }] = useControls(() => ({
+    Config: folder(
+      {
+        baseline: { min: 2, max: 8, value: 4, step: 1 },
+        debug: false,
       },
-    },
+      { collapsed: true },
+    ),
+    Font: folder(
+      {
+        font: {
+          value: "/fonts/Commissioner[FLAR,VOLM,slnt,wght].ttf",
+          options: {
+            Commissioner: "/fonts/Commissioner[FLAR,VOLM,slnt,wght].ttf",
+            Averta: "/fonts/AvertaPE-Regular.otf",
+            Inter: "/fonts/Inter.otf",
+            "IBM Plex Sans": "https://fonts.gstatic.com/s/ibmplexsans/v9/zYXgKVElMYYaJe8bpLHnCwDKhdHeFaxOedc.woff2",
+            "IBM Plex Serif": "https://fonts.gstatic.com/s/ibmplexserif/v10/jizDREVNn1dOx-zrZ2X3pZvkTiUf2zcZiVbJ.woff2",
+            "Playfair Display":
+              "https://fonts.gstatic.com/s/playfairdisplay/v25/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKd3vXDXbtXK-F2qC0s.woff",
+            Roboto: "https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2",
+            "Roboto Condensed": "https://fonts.gstatic.com/s/robotocondensed/v19/ieVl2ZhZI2eCN5jzbjEETS9weq8-19K7DQk6YvM.woff2",
+            "Fira Sans": "https://fonts.gstatic.com/s/firasans/v11/va9E4kDNxMZdWfMOD5Vvl4jLazX3dA.woff2",
+            "Fira Code": "https://fonts.gstatic.com/s/firacode/v14/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_A9sJVD7MOzlojwUKQ.woff",
+            "JetBrains Mono": "/fonts/JetBrainsMono-Regular.ttf",
+          },
+        },
+      },
+      { collapsed: true },
+    ),
   }))
 
   const { length, base, interval, step } = useControls({
@@ -95,7 +107,7 @@ export const App = () => {
   const { gravity, gravityTension, tension } = useControls({
     Rhythm: folder(
       {
-        gravity: false,
+        gravity: true,
         gravityTension: {
           label: "tension",
           value: 0,
@@ -116,7 +128,6 @@ export const App = () => {
     ),
   })
 
-  const baseline = 4
   const appledTension = gravity ? gravityTension * 0.8 : tension * 0.8
   const normalizedTensions = Math.abs((appledTension - 1) / 2)
 
@@ -199,7 +210,7 @@ export const App = () => {
             background-repeat: repeat;
             background-size: 100% ${baseline}px;
             background-image: linear-gradient(
-              rgba(107, 0, 107, 1) 1px,
+              rgba(107, 0, 107, 0) 1px,
               transparent 0
               );
             `}
@@ -266,7 +277,6 @@ export const App = () => {
                   className={css`
                     margin-bottom: ${baseline * 7}px;
                     font-variation-settings: "wght" 400;
-                    text-transform: ${caps ? "uppercase" : "none"};
                   `}>
                   {text[i]}
                 </TextDev>
